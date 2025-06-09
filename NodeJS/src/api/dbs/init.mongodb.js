@@ -10,7 +10,9 @@ class Database{
     }
 
     connect(type = "mongodb"){
-        mongoose.connect(connecString).then(_=>console.log(`Connect database [ ${connecString} ] successfully !!!`))
+        mongoose.connect(connecString,{
+            maxPoolSize : 50
+        }).then(_=>console.log(`Connect database [ ${connecString} ] successfully !!!`))
         .catch(err => console.log("Connect failed !! Error : ",err))
     }
 
