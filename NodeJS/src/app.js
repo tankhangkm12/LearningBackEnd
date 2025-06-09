@@ -13,8 +13,9 @@ app.use(compression())
 
 //database
 require("../src/api/dbs/init.mongodb")
-const countConnect = require("../src/api/helpers/check.connect")
-countConnect()
+const checkConnect = require("../src/api/helpers/check.connect")
+checkConnect.countConnect()
+checkConnect.checkOverload()
 
 
 //route
