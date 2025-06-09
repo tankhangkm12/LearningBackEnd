@@ -11,7 +11,7 @@ class Database{
 
     connect(type = "mongodb"){
         mongoose.connect(connecString,{
-            maxPoolSize : 50
+            maxPoolSize : 50 // Max available connections in database -> management number connections , limited or expand to optimize for database
         }).then(_=>console.log(`Connect database [ ${connecString} ] successfully !!!`))
         .catch(err => console.log("Connect failed !! Error : ",err))
     }
