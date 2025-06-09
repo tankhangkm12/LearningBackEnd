@@ -13,8 +13,13 @@ app.use(compression())
 
 //database
 require("../src/api/dbs/init.mongodb")
+const countConnect = require("../src/api/helpers/check.connect")
+countConnect()
+
 
 //route
 
+
+//handle error
 
 module.exports = app;
