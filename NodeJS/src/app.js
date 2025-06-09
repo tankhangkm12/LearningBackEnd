@@ -19,7 +19,7 @@ checkConnect.checkOverload()
 
 
 //route
-
+app.use("/",require("./api/routes"))
 
 //handle error
 
