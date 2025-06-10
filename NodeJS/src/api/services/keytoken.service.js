@@ -1,6 +1,6 @@
 'use strict'
 
-const KeyTokenModel = require("../models/keyToken.model")
+const KeyTokenModel = require("../models/keytoken.model")
 
 /* 
     Note:
@@ -15,13 +15,10 @@ class KeyTokenService{
             const publicKeyString = publicKey.toString()
             const token = await KeyTokenModel.create({
                 user : userId,
-                publicKey : publicKeyString 
+                publicKey : publicKeyString
             })
-            console.log("Typeof(token) : ",typeof(token))
-            console.log("typeof(token.publicKey) : ",typeof(token.publicKey))
             return token ? token.publicKey : null 
         } catch (error) {
-            console.log("ConCac")
             return error
         }
     }

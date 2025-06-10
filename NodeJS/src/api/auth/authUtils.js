@@ -9,11 +9,18 @@ const JWT = require("jsonwebtoken")
 const createTokenPair = async (payload,publicKey,privateKey) => {
     try {
        //access token
-       const accessToken =  JWT.sign(payload,privateKey,{expiresIn : '15m'})
+        const accessToken =  JWT.sign(payload,privateKey,{
+            algorithm : 'RS256', //default HS256
+            expiresIn : '15m'
+        })
 
        //refresh token
-        const refreshToken = JWT.sign(payload,privateKey,{expiresIn : '7d'})
+        const refreshToken = JWT.sign(payload,privateKey,{
+            algorithm : 'RS256', //default HS256
+            expiresIn : '7d'
+        })
 
+        
         JWT.verify(accessToken,publicKey,(error,decode)=>{
             if (error) return {
                 code : "xxx",
@@ -21,6 +28,8 @@ const createTokenPair = async (payload,publicKey,privateKey) => {
             }
             console.log("decode : ",decode)
         })
+
+        return {accessToken,refreshToken}
 
 
     } catch (error) {

@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt")
 const crypto = require("crypto")
 const KeyTokenService = require("./keytoken.service")
 const createTokenPair = require("../auth/authUtils")
+const getInfoData = require("../utils")
 
 
 const RoleShop = {
@@ -14,7 +15,7 @@ const RoleShop = {
 
 
 class AccessServices{
-    static async signUp({username,password,email}){
+    static async signUp({name,password,email}){
         try{
             // step 1 : check mail exists ??
             const emailExisting = await ShopModel.findOne({email}).lean() //lean() help return object js (if no have lean, it wil return mongoose model, size more 30 time than have lean() )
@@ -24,7 +25,7 @@ class AccessServices{
             }
             const hashPasword = await bcrypt.hash(password,10)
             const newShop = await ShopModel.create({  //create mode , save to document and return model if success
-                username,
+                name,
                 password : hashPasword,
                 email,roles : [RoleShop.SHOP]
             })
@@ -42,8 +43,8 @@ class AccessServices{
                     },
                 })
                 console.log({publicKey,privateKey})
-                const publicKeyString = KeyTokenService.createKeyToken({
-                    userID : newShop.id,
+                const publicKeyString = await KeyTokenService.createKeyToken({
+                    userId : newShop._id,
                     publicKey
                 }) // get from database => its type string => needed convert to rsa
                 if (!publicKeyString){
@@ -57,13 +58,13 @@ class AccessServices{
 
                 console.log(`Public Key Object ::: ${publicKeyObject}`)
                 //create token pair<accessToken,refreshToken>
-                const tokens = createTokenPair({userId : newShop._id,email},publicKeyObject,privateKey)
+                const tokens = await createTokenPair({userId : newShop._id,email},publicKeyObject,privateKey)
                 console.log("Created token success ::: ",tokens)
 
                 return {
                     code : 201,
                     metadata : {
-                        shop : newShop,
+                        shop : getInfoData({fields : ['_id','name','email'],object : newShop}),
                         tokens
                     }
                 }
