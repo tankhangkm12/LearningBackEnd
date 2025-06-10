@@ -9,13 +9,16 @@ app.use(express.json())
 app.use(helmet())
 app.use(morgan("combined"))
 app.use(compression())
+app.use(express.urlencoded({
+    extended : true
+}))
 
 
 //database
 require("../src/api/dbs/init.mongodb")
 const checkConnect = require("../src/api/helpers/check.connect")
 checkConnect.countConnect()
-checkConnect.checkOverload()
+// checkConnect.checkOverload()
 
 
 //route

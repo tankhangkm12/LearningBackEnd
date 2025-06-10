@@ -6,7 +6,7 @@ const DOCUMENT_NAME = 'Key'
 const COLLECTION_NAME = 'Keys'
 // Declare the Schema of the Mongo model
 var keyTokenSchema = new mongoose.Schema({
-    name:{
+    user:{
         type:mongoose.Schema.Types.ObjectId, // value is type id of Shop 
         required:true,
         ref : "Shop"
