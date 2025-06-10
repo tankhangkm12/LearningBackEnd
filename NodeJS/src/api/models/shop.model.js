@@ -1,4 +1,4 @@
-//!dmbg -> mongo sniper ..
+//!dmbgum -> mongo sniper ..
 
 const {model,Schema,Types, Collection} = require('mongoose'); // Erase if already required
 
